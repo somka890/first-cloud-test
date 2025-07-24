@@ -69,15 +69,16 @@ def uzpildyti_produktus():
 
 @main.route('/init-db')
 def init_db():
+    from . import db
     db.create_all()
     return "✅ DB lentelės sukurtos"
 
-
 @main.route('/add-test-user')
 def add_test_user():
+    from .models import Vartotojas
+    from . import db
     vartotojas = Vartotojas(el_pastas="admin@admin.com", slaptazodis="admin")
     db.session.add(vartotojas)
     db.session.commit()
     return "✅ Testinis vartotojas pridėtas"
-
 
