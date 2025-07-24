@@ -9,8 +9,8 @@ main = Blueprint('main', __name__)
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        el_pastas = request.form.get('labas')
-        slaptazodis = request.form.get('vakaras')
+        el_pastas = request.form.get('el_pastas')
+        slaptazodis = request.form.get('slaptazodis')
 
         vart = Vartotojas.query.filter_by(el_pastas=el_pastas).first()
 
@@ -64,3 +64,20 @@ def uzpildyti_produktus():
         db.session.add(produktas)
     db.session.commit()
     return "Produktai pridėti"
+
+
+
+@main.route('/init-db')
+def init_db():
+    db.create_all()
+    return "✅ DB lentelės sukurtos"
+
+
+@main.route('/add-test-user')
+def add_test_user():
+    vartotojas = Vartotojas(el_pastas="admin@admin.com", slaptazodis="admin")
+    db.session.add(vartotojas)
+    db.session.commit()
+    return "✅ Testinis vartotojas pridėtas"
+
+
